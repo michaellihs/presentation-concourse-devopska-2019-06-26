@@ -100,6 +100,11 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
+						## Classic Approaches: <br>Everything on Master
+						<img src="images/everythin-on-master.png" width="600px"  style="border: 0; box-shadow: none"/></script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
 						## Classic Approaches:<br>Everything on Master
 						<ul style="list-style: none">
 							<li><span style="color: green">&#10004;</span> Simple</li>
@@ -108,6 +113,12 @@
 							<li><span style="font-size: 150%;line-height: 75%;color:red">&#65794;</span> Long set up and tear down</li>
 							<li><span style="font-size: 150%;line-height: 75%;color:red">&#65794;</span> Customized build environments</li>
 						</ul>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Classic Approaches: <br>Agent VMs (a.k.a. Build Slaves)
+						<img src="images/classic-vm.png" width="900px"  style="border: 0; box-shadow: none"/></script>
 					</script>
 				</section>
 				<section data-markdown>
@@ -206,18 +217,18 @@
 				<section data-markdown>
 					<script type="text/template">
 						## Issues 2
-						- Docker Plugin is still flaky
+						- [Docker Plugin is still flaky](https://stackoverflow.com/questions/48421228/jenkins-with-docker-plugin-not-pulling-docker-images-from-private-registry)
 						- Log output could be better
 						- Strange error messages
-						- Credentials handling in Containers
+						- Credentials handling in containers
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Issues 3
 						- Pollution of disk space
-						- Company Proxies
-						- (Self-signed) Certificates
+						- Company proxies
+						- (Self-signed) certificates
 					</script>
 				</section>
 
@@ -232,7 +243,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## The old days
-						- No pipelines
+						- No Jenkins pipelines
 						- Long shell scripts in Jenkins UI
 						- No version control
 						- No history, no roll-back
@@ -354,7 +365,7 @@
 						## Multi-Branch with Global Library
 						- Every project can use dedicated library version
 						- Each branch can use different version
-						- Test new version without breaking master branch
+						- Test new versions without breaking master branch
 					</script>
 				</section>
 				<section data-markdown>
@@ -425,9 +436,9 @@
 				<section data-markdown>
 					<script type="text/template">
 						## Gitlab CI
-						- Declarative pipelines (yaml)
+						- [Declarative pipelines](https://docs.gitlab.com/ce/ci/quick_start/README.html#creating-a-gitlab-ci-yml-file) (yaml)
 						- Only one tool (assuming you use Gitlab)
-						- Better integration in Version Control (Merge Requests)
+						- Better integration in Version Control ([Merge Requests](https://docs.gitlab.com/ee/user/project/merge_requests/))
 						- Better user management
 						- Gitlab also provides private Docker registry, chat server, monitoring...
 					</script>
