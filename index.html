@@ -54,7 +54,7 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<h1 style="font-size: 800%"> Why?</h1>
+						<h1 style="font-size: 800%">Why?</h1>
 					</script>
 				</section>
 				<section data-markdown>
@@ -68,15 +68,35 @@
 				    </script>
 				</section>
 				<section data-markdown>
-				    <script type="text/template">
-				        # Challenges with CI/CD
-				        - Many repos, many branches, many commits...
-				        - Many languages, many frameworks, many 3rd party tools
-				        - Scalability
-				        - Isolation of Builds
-				        - Set up and tear down - clean and fast
-				        - Reproducible customized build environments
-				    </script>
+					<script type="text/template">
+						## Challenges with CI/CD
+						<ul style="list-style: none">
+							<li>CI/CD infrastructure "is not our main task"</li>
+							<li>&rarr; needs to be simple</li>
+							<li>&rarr; more than one person should understand it</li>
+						</ul>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Challenges with CI/CD
+						<ul style="list-style: none">
+							<li>Many repositories, branches, commits</li>
+							<li>&rarr; needs to scale</li>
+							<li>&rarr; isolation of builds</li>
+						</ul>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Challenges with CI/CD
+						<ul style="list-style: none">
+							<li>Many languages, frameworks, 3rd party tools...</li>
+							<li>&rarr; isolation of builds</li>
+							<li>&rarr; customized build environments</li>
+							<li>&rarr; clean and fast setup and tear down</li>
+						</ul>
+					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -106,7 +126,7 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						# Dockerized Build Agents
+						<h1 style="font-size: 600%">Dockerized Build Agents</h1>
 					</script>
 				</section>
 				<section data-markdown>
@@ -116,21 +136,21 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Workflow of Jenkins with Agent VMs
-						- Docker Engine running on Agent VM
-						- Exposes Docker socket via TCP Port
-						- Docker Plugin starts Containers on Docker Engine
-						- SSH connection between Jenkins Master and Container
+						## Workflow of Jenkins with Build Containers
+						- Docker engine running on agent VM
+						- [Expose Docker socket](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-DockerEnvironment) via TCP port
+						- [Jenkins Docker plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-Creatingadockerimage) starts containers on Docker engine
+						- [SSH connection](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-LaunchviaSSH) between Jenkins Master and container
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker Images for Agent VMs
-						- Based on jenkinsci/ssh-slave
+						## Docker Images for Build Containers
+						- Based on [`jenkinsci/ssh-slave`](https://hub.docker.com/r/jenkinsci/ssh-slave/)
 						- Global base image with company settings
 						- Extended images with project-specific add-ons
 						- Hosted on private Docker Registry
-						- Registered as "Templates" on Jenkins Master
+						- Registered as ["Templates"](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-Creatingadockerimage) in Jenkins Docker plugin
 					</script>
 				</section>
 				<section data-markdown>
@@ -141,18 +161,9 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Description of Docker Plugin
-						- Show basic concepts
-						- Multiple Docker Engine hosts
-						- Docker Images via Templates (--> agents)
-						- Access methods (Java, SSH, ...)
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
 						## More Complex Setups
-						- Docker-outside-of-Docker approach
-						- Docker socket mounted into Agent Container
+						- [Docker-outside-of-Docker](http://blog.teracy.com/2017/09/11/how-to-use-docker-in-docker-dind-and-docker-outside-of-docker-dood-for-local-ci-testing/) approach
+						  - Docker socket mounted into Agent Container
 						- 3rd party tools (e.g. databases, messaging) in separate containers
 						- Pre-built data containers e.g. for database dumps...
 						- Ability to create new images from within containers
@@ -168,7 +179,7 @@
 					<script type="text/template">
 						## Requirements Revisited
 						<ul style="list-style: none">
-							<li><span style="color: blue;font-weight: bold">?</span> Simple</li>
+							<li><span style="color: blue;font-weight: bold">&nbsp;?</span>&nbsp; Simple</li>
 							<li><span style="color: green">&#10004;</span> Scales (with little overhead)</li>
 							<li><span style="color: green">&#10004;</span> Isolation of builds</li>
 							<li><span style="color: green">&#10004;</span> Fast set up and tear down</li>
@@ -188,7 +199,7 @@
 						## Issues 1
 						- Overall setup becomes more complex
 						- Debugging becomes significantly harder
-						- Requires Docker Skills
+						- Requires Docker skills
 						- Dockerfile != Ansible
 					</script>
 				</section>
@@ -477,6 +488,7 @@
 						* [Jenkins SSH Slave Docker Image](https://hub.docker.com/r/jenkinsci/ssh-slave/)
 						* [Private Docker Registry with Artifactory](https://www.jfrog.com/confluence/display/RTF/Docker+Registry)
 						* [Official Jenkins Docker images](https://github.com/jenkinsci/docker)
+						* [Docker in Docker Blog Post](http://blog.teracy.com/2017/09/11/how-to-use-docker-in-docker-dind-and-docker-outside-of-docker-dood-for-local-ci-testing/)
 					</script>
 				</section>
 				<section data-markdown>
