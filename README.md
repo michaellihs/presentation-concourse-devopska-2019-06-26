@@ -1,8 +1,8 @@
-Jenkins & Docker - Containerized Build Agents
-=============================================
+Scalable Build Agents
+=====================
 
-Presentation for the [Docker Meetup Stuttgart, February 15th 2018](https://www.meetup.com/de-DE/Docker-Stuttgart/events/246746086/).
+Presentation for the [GI Meeting Microservices and DevOps on March 11th, 2019](https://ak-msdo.gi.de/veranstaltungen/naechste-veranstaltungen/5-treffen-1112032019-stuttgart.html).
 
-You can watch this presentation at [https://michaellihs.github.io/presentation-docker-meetup-20180215](https://michaellihs.github.io/presentation-docker-meetup-20180215/index.html).
+You can watch this presentation at [https://michaellihs.github.io/presentation-gi-2019-03-11](https://michaellihs.github.io/presentation-gi-2019-03-11).
 
 
