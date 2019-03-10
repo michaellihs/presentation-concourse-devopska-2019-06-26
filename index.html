@@ -4,7 +4,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Jenkins & Docker - Containerized Build Agents</title>
+
+		<title>Scalable CI/CD Infrastructure</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/solarized.css">
@@ -26,9 +27,8 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Jenkins & Docker</h1>
+					<h1>Scalable CI/CD Infrastructure</h1>
 					<img height="40%" width="40%" src="images/docker-jenkins.png" style="border: 0; box-shadow: none"/>
-					<h2>Containerized Build Agents</h2>
 					<p style="font-size: 50%">image source: https://wiki.jenkins.io/display/JENKINS/CloudBees+Docker+Custom+Build+Environment+Plugin	</p>
 				</section>
 				<section data-markdown>
@@ -342,21 +342,22 @@
 					<script type="text/template">
 						## Sample Jenkinsfile with Global Library
 						```groovy
-						import com.bosch.de.bic.pipelines.v1.MavenPipeline
+						import com.bosch.de.bic.pipelines.v1.DockerPipeline
 
-						MavenPipeline.builder(this, steps)
-							.setAgent('bosch/ssh-slave-maven')
-							.withCheckoutStage()
-							.withInitStage()
-							.withBuildStage()
-							.withUnitTestsStage()
-							.withUploadSnapshotToArtifactoryStage(
-								'ARTIFACTORY_SERVER_ID', 'bosch_snapshot'
-							)
-							.withUploadReleaseToArtifactoryStage(
-								'ARTIFACTORY_SERVER_ID', 'bosch_release'
-							)
-							.execute()
+						def privateRegistry = 'rb-bic-artifactory.de.bosch.com'
+
+						DockerPipeline.builder(this, steps)
+						    .setAgent('ssh-slave-docker')
+						    .withCheckoutStage()
+						    .withBuildStage('Build Image', privateRegistry, 'bic/ssh-slave', '', '.')
+						    .withTestStage('Test Image', 'bic/ssh-slave'
+						    	'-v /var/run/docker.sock:/var/run/docker.sock',
+						        '-v /usr/bin/docker:/bin/docker',
+						        '-v /home/jenkins/.docker/config.json:/root/.docker/config.json',
+						        '-v /home/jenkins/.ssh:/root/.ssh'
+						    )
+						    .withPushStage('Push Image', privateRegistry, 'bic/ssh-slave')
+						    .execute()
 						```
 					</script>
 				</section>
@@ -386,26 +387,6 @@
 						```
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						##  Build Docker Images with Global Library
-						```groovy
-						import com.bosch.de.bic.pipelines.v1.MavenPipeline
-
-						DockerPipeline.builder(this, steps)
-							.setAgent('ssh-slave-maven')
-							.withCheckoutStage()
-							.withBuildStage(
-								'Build Image',
-								'bosch/ssh-slave-maven',
-								'.',
-								'--build-arg HTTP_PROXY_HOST="127.0.0.1"',
-								'--build-arg HTTP_PROXY_PORT=8080'
-							)
-							.execute()
-						```
-					</script>
-				</section>
 
 
 
@@ -423,7 +404,7 @@
 						  - **Jobs**: actions to perform when dependent resources change
 						- Pipelines as "First Class Citizens"
 						- Tasks always run isolated (in Docker Containers)
-						- Complex fan-in and fan-out
+						- Complex fan-in and fan-out (Pipelines as DAGs)
 					</script>
 				</section>
 				<section data-markdown>
@@ -435,12 +416,12 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Gitlab CI
+						## GitLab CI
 						- [Declarative pipelines](https://docs.gitlab.com/ce/ci/quick_start/README.html#creating-a-gitlab-ci-yml-file) (yaml)
-						- Only one tool (assuming you use Gitlab)
+						- Only one tool (assuming you use GitLab)
 						- Better integration in Version Control ([Merge Requests](https://docs.gitlab.com/ee/user/project/merge_requests/))
 						- Better user management
-						- Gitlab also provides private Docker registry, chat server, monitoring...
+						- GitLab also provides private Docker registry, chat server, monitoring...
 					</script>
 				</section>
 
