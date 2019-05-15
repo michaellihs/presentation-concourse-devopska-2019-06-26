@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
-		<title>Scalable CI/CD Infrastructure</title>
+		<title>Jenkins is Dead! Long live Jenkins!</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/solarized.css">
@@ -27,8 +27,9 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Scalable CI/CD Infrastructure</h1>
-					<img height="40%" width="40%" src="images/docker-jenkins.png" style="border: 0; box-shadow: none"/>
+					<h1>Jenkins is Dead!</h1>
+					<h2> Long live Jenkins!</h2>
+					<img height="30%" width="30%" src="images/jenkins-fire.png" style="border: 0; box-shadow: none" />
 					<p style="font-size: 50%">image source: https://wiki.jenkins.io/display/JENKINS/CloudBees+Docker+Custom+Build+Environment+Plugin	</p>
 				</section>
 				<section data-markdown>
@@ -41,12 +42,9 @@
 				<section data-markdown>
 				    <script type="text/template">
 				        ## Agenda
-				        - Motivation
-				        - "Classic Approaches"
-				        - Dockerized Build Agents
-				        - Pipelines as Code
-				        - Open Issues
-				        - Alternatives & Outlook
+				        - DevOps, CI/CD & all the buzz
+				        - ...
+				        - ...
 				    </script>
 				</section>
 
@@ -54,19 +52,62 @@
 
 				<section data-markdown>
 					<script type="text/template">
-						<h1 style="font-size: 800%">Why?</h1>
+						<h1 style="font-size: 800%">DevOps Revisited</h1>
 					</script>
 				</section>
+
 				<section data-markdown>
 				    <script type="text/template">
-				        # The Bosch IoT Cloud
-				        - ~100 "Contributors" world wide
-				        - Mostly glue code for platform components
-				        - Java, Go, Python, Bash, NodeJS, ...
-				        - High demands in quality
-				        - Complex deployments
+				        # Four Key Metrics
+
+				        ## 1. lead time
+				        ## 2. deployment frequency
+				        ## 3. mean time to restore
+				        ## 4. change fail percentage
+
+				        see <a href="https://www.thoughtworks.com/de/radar/techniques/four-key-metrics">ThoughtWorks Technology Radar - Four Key Metrics</a>
 				    </script>
 				</section>
+
+				<section data-markdown>
+				    <script type="text/template">
+				        # Main Tasks of CI/CD
+
+				        * automate things that (used to) hurt
+				        * make building and delivering software more reliable
+				        * let developers focus on features
+				        * provide specific feedback (if things go wrong)
+
+				    </script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+				        # Operators' Whish List
+
+				        * simple deployment
+				          * containers
+				          * configuration as code
+				        * simple day 2 operations (updates, patches, backups)
+				          * staging
+				        * simple integration (CVS, IdM, Logging, Monitoring)
+				          * user / permission management
+				          * web hooks
+				        * scalability (build agents, high availability)
+				          * customized build agents
+				          * zero downtime upgrades
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+				        # Developers' Whish List
+
+				        * see "Build Pipelines that don't suck"
+					</script>
+				</section>
+
+
 				<section data-markdown>
 					<script type="text/template">
 						## Challenges with CI/CD
