@@ -122,7 +122,7 @@
 					<script type="text/template">
 						## A good Pipeline is reliable
 						<ul style="list-style: none">
-                            <li>isolated build (Docker)</li>
+                            <li>isolated build (containers)</li>
                             <li>needs a tradeoff between isolation and speed</li>
 						</ul>
 					</script>
@@ -130,357 +130,89 @@
 				<section data-markdown>
 					<script type="text/template">
 						## A good Pipeline is fast
-                        <li>throw hardware at the problem</li>
-                        <li>parallelization</li>
-                        <li>avoid repeating steps</li>
-                        <li>make use of caching</li>
+						<ul style="list-style: none">
+                            <li>throw hardware at the problem</li>
+                            <li>parallelization</li>
+                            <li>avoid repeating steps</li>
+                            <li>make use of caching</li>
+						</ul>
+                    </script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Good Pipelines are scalable
 						<ul style="list-style: none">
-                            <li>find a tradeoff between reuse and couplingy</li>
-                            <li>follow a similar structurey</li>
-                            <li>parametrize stepsy</li>
+                            <li>find a tradeoff between reuse and coupling</li>
+                            <li>follow a similar structure</li>
+                            <li>parametrize steps</li>
 						</ul>
 					</script>
 				</section>
 
-                
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Concourse Overview</h1>
+                    </script>
+                </section>
+
+
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">How to Set Up Concourse</h1>
+                    </script>
+                </section>
 
 
 
 				<section data-markdown>
 					<script type="text/template">
-						<h1 style="font-size: 600%">Dockerized Build Agents</h1>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Jenkins Agent Setup
-						<img src="images/jenkins-docker-setup.png"  style="border: 0; box-shadow: none"/></script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Workflow of Jenkins with Build Containers
-						- Docker engine running on agent VM
-						- [Expose Docker socket](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-DockerEnvironment) via TCP port
-						- [Jenkins Docker plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-Creatingadockerimage) starts containers on Docker engine
-						- [SSH connection](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-LaunchviaSSH) between Jenkins Master and container
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Docker Images for Build Containers
-						- Based on [`jenkinsci/ssh-slave`](https://hub.docker.com/r/jenkinsci/ssh-slave/)
-						- Global base image with company settings
-						- Extended images with project-specific add-ons
-						- Hosted on private Docker Registry
-						- Registered as ["Templates"](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin#DockerPlugin-Creatingadockerimage) in Jenkins Docker plugin
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Docker Images Hierarchie
-						<img src="images/image-hierarchie.png"  style="border: 0; box-shadow: none"/>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## More Complex Setups
-						- [Docker-outside-of-Docker](http://blog.teracy.com/2017/09/11/how-to-use-docker-in-docker-dind-and-docker-outside-of-docker-dood-for-local-ci-testing/) approach
-						  - Docker socket mounted into Agent Container
-						- 3rd party tools (e.g. databases, messaging) in separate containers
-						- Pre-built data containers e.g. for database dumps...
-						- Ability to create new images from within containers
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## More Complex Setups
-						<img src="images/more-complex.png"  style="border: 0; box-shadow: none"/>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Requirements Revisited
-						<ul style="list-style: none">
-							<li><span style="color: blue;font-weight: bold">&nbsp;?</span>&nbsp; Simple</li>
-							<li><span style="color: green">&#10004;</span> Scales (with little overhead)</li>
-							<li><span style="color: green">&#10004;</span> Isolation of builds</li>
-							<li><span style="color: green">&#10004;</span> Fast set up and tear down</li>
-							<li><span style="color: green">&#10004;</span> Customized build environments
+						<h1 style="font-size: 600%">Basic Building Blocks</h1>
 					</script>
 				</section>
 
 
-
-				<section data-markdown>
-					<script type="text/template">
-						<h1 style="font-size: 800%">The Dark Side(s)</h1>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Issues 1
-						- Overall setup becomes more complex
-						- Debugging becomes significantly harder
-						- Requires Docker skills
-						- Dockerfile != Ansible
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Issues 2
-						- [Docker Plugin is still flaky](https://stackoverflow.com/questions/48421228/jenkins-with-docker-plugin-not-pulling-docker-images-from-private-registry)
-						- Log output could be better
-						- Strange error messages
-						- Credentials handling in containers
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Issues 3
-						- Pollution of disk space
-						- Company proxies
-						- (Self-signed) certificates
-					</script>
-				</section>
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 800%">Demo Time</h1>
+                    </script>
+                </section>
 
 
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Advanced Concepts</h1>
+                    </script>
+                </section>
 
-				<section data-markdown>
-					<script type="text/template">
-						<h1 style="font-size: 800%">Pipelines as Code</h1>
-						TODO add image
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## The old days
-						- No Jenkins pipelines
-						- Long shell scripts in Jenkins UI
-						- No version control
-						- No history, no roll-back
-						- Easily diverged from project sources
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Jenkins Pipelines to the rescue
-						- Groovy DSL
-						- Treated as code
-						- Versioned with project source code
-						- Allow definition of stages to structure pipelines
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## But after a while...
-						- Pipelines become more and more complex
-						- Lots of duplicated code
-						- Patches are spread over projects
-						- Finally: Developers don't want to touch it...
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Sample Jenkinsfile
-						```groovy
-						node('ssh-slave-gradle') {
-							try {
-								stageCheckoutInitialize()
-								stageCompileUnitTests()
-								stageCodeAnalysis()
-								stagePublishDistribution()
-								stageCreateUserDefinedService()
-								stageDeployServiceBroker()
-								stageRegisterServiceBroker()
-								stageCreateOracleService()
-								stageDeploySmokeTestApp()
-								stageRunSmokeTests()
-								stageCleanUp()
-							} catch(e) {
-								error e.getMessage();
-							} finally {
-								if (currentBuild.result == 'UNSTABLE' || currentBuild.result == 'FAILED') {
-									sendMailNotification()
-								}
-							}
-						}
 
-						def stageCheckoutInitialize() {
-							stage('Checkout Initialize') {
-								checkout scm
-								initialize()
-							}
-						}
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 800%">Recap</h1>
+                    </script>
+                </section>
 
-						def stageCompileUnitTests() {
-							stage('Compile Unit Tests') {
-								env.basicAuthAdminUsername = "username"
-								env.basicAuthAdminPassword = "password"
-								env.dashboardClientId = "dashboard_client_id"
-								env.dashboardClientSecret = "dashboard_client_secret"
-								env.dashboardURL = "/my/dashboard/url"
-								env.region = "de"
 
-								withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: Constants.ARTIFACTORY_CREDENTIALS_ID, usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
-									executeGradleCommand("build jacocoTestReport")
-								}
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Downsides</h1>
+                    </script>
+                </section>
 
-								junit '**/build/**/TEST-*.xml'
-							}
-						}
 
-						def stageCodeAnalysis() {
-							stage('Code Analysis') {
-								step([$class: 'FindBugsPublisher', pattern: '**/build/**/findbugs/main.xml'])
-								step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: '**/build/**/checkstyle/main.xml'])
-								step([$class: 'JacocoPublisher', execPattern: '**/build/jacoco/**.exec'])
-							}
-						}
-
-						// ...
-						```
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Global Pipeline Library to the rescue
-						- Provide shared library
-						- Patches / new features can be added globally
-						- Developers can "focus on parameters"
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Sample Jenkinsfile with Global Library
-						```groovy
-						import com.bosch.de.bic.pipelines.v1.DockerPipeline
-
-						def privateRegistry = 'rb-bic-artifactory.de.bosch.com'
-
-						DockerPipeline.builder(this, steps)
-						    .setAgent('ssh-slave-docker')
-						    .withCheckoutStage()
-						    .withBuildStage('Build Image', privateRegistry, 'bic/ssh-slave', '', '.')
-						    .withTestStage('Test Image', 'bic/ssh-slave'
-						    	'-v /var/run/docker.sock:/var/run/docker.sock',
-						        '-v /usr/bin/docker:/bin/docker',
-						        '-v /home/jenkins/.docker/config.json:/root/.docker/config.json',
-						        '-v /home/jenkins/.ssh:/root/.ssh'
-						    )
-						    .withPushStage('Push Image', privateRegistry, 'bic/ssh-slave')
-						    .execute()
-						```
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Multi-Branch with Global Library
-						- Every project can use dedicated library version
-						- Each branch can use different version
-						- Test new versions without breaking master branch
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Specify branch of Global Library
-						```groovy
-						@Library("bosch-global-library@feature/JIRA-12345")
-
-						import com.bosch.de.bic.pipelines.v1.MavenPipeline
-
-						MavenPipeline.builder(this, steps)
-							.setAgent('bosch/ssh-slave-maven')
-							.withCheckoutStage()
-							.withInitStage()
-							.withBuildStage()
-							.withUnitTestsStage()
-							// ...
-						```
-					</script>
-				</section>
-
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Concourse vs Jenkins</h1>
+                    </script>
+                </section>
 
 
 				<section data-markdown>
 					<script type="text/template">
-						<h1 style="font-size: 800%">Alter-natives</h1>
+						<h1 style="font-size: 800%">Thank You!</h1>
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Concourse
-						- [Three main concepts](https://concourse.ci/concepts.html)
-						  - **Tasks**: execution of a script in an isolated environment
-						  - **Resources**: entity that can be checked, pulled or pushed
-						  - **Jobs**: actions to perform when dependent resources change
-						- Pipelines as "First Class Citizens"
-						- Tasks always run isolated (in Docker Containers)
-						- Complex fan-in and fan-out (Pipelines as DAGs)
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Concourse Sample Pipeline
-						<img src="images/concourse-pipeline.png"/>
-						<p style="font-size: 50%">image source: https://concourse.ci/pipelines.html</p>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## GitLab CI
-						- [Declarative pipelines](https://docs.gitlab.com/ce/ci/quick_start/README.html#creating-a-gitlab-ci-yml-file) (yaml)
-						- Only one tool (assuming you use GitLab)
-						- Better integration in Version Control ([Merge Requests](https://docs.gitlab.com/ee/user/project/merge_requests/))
-						- Better user management
-						- GitLab also provides private Docker registry, chat server, monitoring...
-					</script>
-				</section>
-
-
-
-				<section data-markdown>
-					<script type="text/template">
-						<h1 style="font-size: 800%">Outlook</h1>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Docker Swarm / Kubernetes
-						- Replace "hand-built" Agent VMs
-						- Better scalability
-						- Better resource management
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Roll out Jenkins Master on Docker
-						- Easier updates, easy roll-back
-						- Use Jenkins (Docker) Pipelines for upgrading Jenkins
-						- Finally: Run everything on Docker cluster
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Credentials Management
-						- Introduce PAM (e.g. Vault, Credhub, Conjure)
-						- Fine grained permissions
-						- Facilitate rotation of credentials
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Monitoring & Logging
-						- Disk space on Agent VMs
-						- CPU Usage of Agent VMs
-						- \# of containers running
-						- Logs of Docker Engines, Containers...
-					</script>
-				</section>
-
 
 
 				<section data-markdown>
@@ -488,47 +220,15 @@
 						<h1 style="font-size: 800%">Questions</h1>
 					</script>
 				</section>
+
+
 				<section data-markdown>
 					<script type="text/template">
 						## References
-						* [Jenkins Docker Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Plugin)
-						* [Jenkins SSH Slave Docker Image](https://hub.docker.com/r/jenkinsci/ssh-slave/)
-						* [Private Docker Registry with Artifactory](https://www.jfrog.com/confluence/display/RTF/Docker+Registry)
-						* [Official Jenkins Docker images](https://github.com/jenkinsci/docker)
-						* [Docker in Docker Blog Post](http://blog.teracy.com/2017/09/11/how-to-use-docker-in-docker-dind-and-docker-outside-of-docker-dood-for-local-ci-testing/)
+
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## References
-						Riot Games Blog posts on Jenkins in Docker
-						* [Putting Jenkins in a Docker Container](https://engineering.riotgames.com/news/putting-jenkins-docker-container)
-						* [Docker & Jenkins - Data that persists](https://engineering.riotgames.com/news/docker-jenkins-data-persists)
-						* [Jenkins, Docker, Proxies and Compose](https://engineering.riotgames.com/news/jenkins-docker-proxies-and-compose)
-						* [Taking Control of your Docker Image](https://engineering.riotgames.com/news/taking-control-your-docker-image)
-						* [Understanding Volumes in Docker](http://container-solutions.com/understanding-volumes-docker/)
-						* [Troubleshooting Jenkins Reverse Proxy Issues](https://wiki.jenkins.io/display/JENKINS/Jenkins+says+my+reverse+proxy+setup+is+broken)
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## References
-						* [Jenkins Pipeline DSL](https://jenkins.io/doc/book/pipeline/)
-						* [Jenkins Declarative Pipelines (with Docker samples)](https://jenkins.io/doc/book/pipeline/syntax/)
-						* [Jenkins Shared Libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/)
-						* [Example for Jenkins Shared Library (TYPO3 Cookbook Testing)](https://github.com/TYPO3-infrastructure/jenkins-pipeline-global-library-chefci)
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## References
-						* [Concourse CI](http://concourse.ci/)
-						* [Gitlab CI](https://about.gitlab.com/features/gitlab-ci-cd/)
-						* [Hashicorp Vault](https://www.vaultproject.io/)
-						* [Credhub](https://github.com/cloudfoundry-incubator/credhub/tree/master/docs)
-						* [Conjure](https://www.cyberark.com/products/privileged-account-security-solution/cyberark-conjur/)
-					</script>
-				</section>
+
 			</div>
 		</div>
 
