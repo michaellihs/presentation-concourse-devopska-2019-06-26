@@ -48,14 +48,6 @@
 				    </script>
 				</section>
 
-
-
-				<section data-markdown>
-					<script type="text/template">
-						<h1 style="font-size: 800%">DevOps Revisited</h1>
-					</script>
-				</section>
-
 				<section data-markdown>
 				    <script type="text/template">
 				        # Four Key Metrics
@@ -99,80 +91,62 @@
 					</script>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-				        # Developers' Whish List
-
-				        * see "Build Pipelines that don't suck"
-					</script>
-				</section>
-
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Pipelines that don't suck</h1>
+                        source: [Build pipeline that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
+                    </script>
+                </section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## Challenges with CI/CD
+						## A good Pipeline is Code
 						<ul style="list-style: none">
-							<li>CI/CD infrastructure "is not our main task"</li>
-							<li>&rarr; needs to be simple</li>
-							<li>&rarr; more than one person should understand it</li>
+                            <li>needs no modification via UI</li>
+                            <li>is kept close to the app</li>
+                            <li>is in version control</li>
+						</ul>
+					</script>
+				</section>
+
+                <section data-markdown>
+					<script type="text/template">
+						## A good Pipeline is maintainable
+						<ul style="list-style: none">
+                            <li>declarative (?)</li>
+                            <li>locally executable</li>
 						</ul>
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Challenges with CI/CD
+						## A good Pipeline is reliable
 						<ul style="list-style: none">
-							<li>Many repositories, branches, commits</li>
-							<li>&rarr; needs to scale</li>
-							<li>&rarr; isolation of builds</li>
+                            <li>isolated build (Docker)</li>
+                            <li>needs a tradeoff between isolation and speed</li>
 						</ul>
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Challenges with CI/CD
+						## A good Pipeline is fast
+                        <li>throw hardware at the problem</li>
+                        <li>parallelization</li>
+                        <li>avoid repeating steps</li>
+                        <li>make use of caching</li>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Good Pipelines are scalable
 						<ul style="list-style: none">
-							<li>Many languages, frameworks, 3rd party tools...</li>
-							<li>&rarr; isolation of builds</li>
-							<li>&rarr; customized build environments</li>
-							<li>&rarr; clean and fast setup and tear down</li>
+                            <li>find a tradeoff between reuse and couplingy</li>
+                            <li>follow a similar structurey</li>
+                            <li>parametrize stepsy</li>
 						</ul>
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Classic Approaches: <br>Everything on Master
-						<img src="images/everythin-on-master.png" width="600px"  style="border: 0; box-shadow: none"/></script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Classic Approaches:<br>Everything on Master
-						<ul style="list-style: none">
-							<li><span style="color: green">&#10004;</span> Simple</li>
-							<li><span style="font-size: 150%;color:red">&#65794;</span> Doesn't scale</li>
-							<li><span style="font-size: 150%;line-height: 75%;color:red">&#65794;</span> Isolation of builds</li>
-							<li><span style="font-size: 150%;line-height: 75%;color:red">&#65794;</span> Long set up and tear down</li>
-							<li><span style="font-size: 150%;line-height: 75%;color:red">&#65794;</span> Customized build environments</li>
-						</ul>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Classic Approaches: <br>Agent VMs (a.k.a. Build Slaves)
-						<img src="images/classic-vm.png" width="900px"  style="border: 0; box-shadow: none"/></script>
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Classic Approaches:<br>Agent VMs (a.k.a. Build Slaves)
-						<ul style="list-style: none">
-							<li><span style="color: green">&#10004;</span> Simple</li>
-							<li><span style="color: green">&#10004;</span> Scales (with significat overhead)</li>
-							<li><span style="color: green">&#10004;</span> Isolation of builds (only 1 job / VM)</li>
-							<li><span style="font-size: 150%;line-height: 50%;color:red">&#65794;</span> Long set up and tear down</li>
-							<li><span style="font-size: 150%;line-height: 50%;color:red">&#65794;</span> Customized build environments
-					</script>
-				</section>
+
+                
 
 
 
