@@ -150,12 +150,17 @@ body {
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
+  border-radius: 10px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
 
 .reveal code {
+  border-radius: 10px;
+  background-color: tan;
   font-family: monospace; }
 
 .reveal pre code {
+  background-color: #555;
+  border-radius: 10px;
   display: block;
   padding: 5px;
   overflow: auto;
