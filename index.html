@@ -209,7 +209,54 @@
                         * Database
                         * Concourse Worker
                         * `fly` CLI
-                        * TODO add picture
+                        * https://docs.pivotal.io/p-concourse/4-x/architecture.html
+                	</script>
+                </section>
+
+                <section>
+					<img src="images/architecture-overview.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-fly.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-atc.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-db.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-tsa.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-beacon.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-garden.png" style="border: none; box-shadow: none">
+				</section>
+
+                <section>
+					<img src="images/architecture-baggageclaim.png" style="border: none; box-shadow: none">
+				</section>
+
+				<section data-markdown>
+                	<script type="text/template">
+                        ## Some more details...
+                        * EVERYTING runs in ~~Docker~~ containers
+                          * resources as well as jobs
+                        * Declarative (YAML) Pipelines
+                        * Stateless build jobs
+                          * no passing of artifacts inbetween jobs
+                        * Connects to external systems instead of re-inventing them
+                          * e.g. Vault (credentials management), LDAP (user management)
+                        * No plugins, but resources (more lightweight)
+                        * Hightly opinionated (take it or leave it)
                 	</script>
                 </section>
 
