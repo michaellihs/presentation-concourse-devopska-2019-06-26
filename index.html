@@ -77,9 +77,116 @@
 				    </script>
 				</section>
 
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Pipelines that don't suck</h1>
+                        source: [Build pipeline that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
+                    </script>
+                </section>
+
+
+
+<!-- 				<section data-markdown>
+						<script type="text/template">
+							## A Good Pipeline is 
+							
+							* Needs no modifications via UI
+							* Keep it close to the app (not sure about that, yet)
+							* Versioning
+
+
+						</script>
+				</section>
+ -->
+		<!-- 		<section data-markdown>
+						<script type="text/template">
+							## A Good Pipeline is ..
+							## <i>maintainable</i>
+
+							* not a full blown programming language	
+							* declarative dependencies
+
+	
+
+								jobs:
+								  - name: build-microservice
+								  - name: push-microservice-to-s3
+								  - name: deploy-microservice
+									plan:
+									  - get: docker-image
+									  - get: s3-artifact
+										passed: [build-microservice]
+										trigger: true
+								  - name: test-deployment
+								    plan:
+								      - get: docker-image
+								      - get: git-repo-with-tests
+									    passed: [deploy-microservice]
+									    trigger: true 
+						</script>
+				</section> -->
+
 				<section data-markdown>
 					<script type="text/template">
-				        # Operators' Whish List
+						## A Good Pipeline is <i>code</i>
+							
+						* needs no modifications via UI
+						* keep it close to the app (not sure about that, yet)
+						* versioning
+					</script>
+				</section>
+
+                <section data-markdown>
+					<script type="text/template">
+						## A good Pipeline is <i>maintainable</i>
+						
+						* declarative (?)
+						* locally executable
+						* easy to debug
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## A good Pipeline is <i>reliable</i>
+
+						* isolated build (containers)
+						* needs a tradeoff between isolation and speed
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## A good Pipeline is <i>fast</i>
+						
+						* throw hardware at the problem
+						* parallelization
+						* avoid repeating steps
+						* make use of caching
+                    </script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Good Pipelines are <i>visual</i>
+						
+						* avoid the <i>god step</i>
+						* avoid logging overdose
+						* visualize dependencies (TODO: Add screenshot)
+					
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Good Pipelines are <i>scalable</i>
+						
+						* find a tradeoff between reuse and coupling
+						* follow a similar structure
+						* parametrize steps
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+				        ## Operators' Whish List
 
 				        * simple deployment
 				          * containers
@@ -95,104 +202,67 @@
 					</script>
 				</section>
 
+
+				<section data-markdown>
+					<script type="text/template">
+						## Developers' Whish List
+						
+						* easy to use
+						* spend time on features, not on CI/CD tooling
+						* reproducible
+						* web hooks
+						* <i>it just works!</i>
+					</script>
+				</section>
+
+
+
                 <section data-markdown>
                     <script type="text/template">
-                        <h1 style="font-size: 600%">Pipelines that don't suck</h1>
-                        source: [Build pipeline that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
+                        <h1 style="font-size: 600%">How to Set Up Concourse</h1>
                     </script>
                 </section>
-
+								
 				<section data-markdown>
 					<script type="text/template">
-				        # Developers' Whish List
+						## Docker Compose
+						
 
-				        * see "Build Pipelines that don't suck"
+							$ wget https://concourse-ci.org/docker-compose.yml
+							$ docker-compose up -d
+							$ open http://localhost:8080
+							# username & password: test/test
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## A Good Pipeline is ...
-						# code
-
-							here is some code
-							some more 
-							and more
-							and more
-							basically a minimum working pipeline
-
-							Maybe put this at the right panel of the slide?
-							How to trigger a click within one page?
-					</script>
-				</section>
-
-				<section data-markdown>
-						<script type="text/template">
-							# A Good Pipeline is code
+						## BOSH 
+							$ bosh deploy -d concourse manifest.yml
 							
-							* Needs no modifications via UI
-							* Keep it close to the app (not sure about that, yet)
-							* Versioning
-						</script>
-				</section>
 
-				<section data-markdown>
-						<script type="text/template">
-							## A Good Pipeline is ...
-							# maintainable
-	
-								here is some code
-								some more 
-								and more
-								and more
-								basically a minimum working pipeline
-						</script>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## A good Pipeline is Code
-
-						* needs no modification via UI
-						* is kept close to the app
-						* is in version control
+						<p></p>
+						## What's bosh?
+						* deployment and lifecycle management tool
+						* supports canary updates
+						* IaaS agnostic
+						* supports monitoring and failure recovery
+						* TODO: add picture that shows how bosh works with the cpi!
+						* TODO: Maybe only show some graphics?
+						
 					</script>
 				</section>
 
-                <section data-markdown>
-					<script type="text/template">
-						## A good Pipeline is maintainable
-						
-						* declarative (?)
-						* locally executable
-						* easy to debug
-					</script>
-				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## A good Pipeline is reliable
-
-						* isolated build (containers)
-						* needs a tradeoff between isolation and speed
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## A good Pipeline is fast
+						## Cloud Installer Tools
+						* <b>Control Tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production.</i> 
 						
-						* throw hardware at the problem
-						* parallelization
-						* avoid repeating steps
-						* make use of caching
-                    </script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Good Pipelines are scalable
+						* <b>BUCC</b>: <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
+						*  See 
+							* https://github.com/starkandwayne/bucc
+							* https://github.com/EngineerBetter/control-tower 
 						
-						* find a tradeoff between reuse and coupling
-						* follow a similar structure
-						* parametrize steps
 					</script>
 				</section>
 
@@ -262,13 +332,16 @@
 
 
 
-
-                <section data-markdown>
-                    <script type="text/template">
-                        <h1 style="font-size: 600%">How to Set Up Concourse</h1>
-                    </script>
+				<section data-markdown>
+                	<script type="text/template">
+                        ## Concourse Architecture
+                        * Concourse web
+                        * Database
+                        * Concourse Worker
+                        * `fly` CLI
+                        * https://docs.pivotal.io/p-concourse/4-x/architecture.html
+                	</script>
                 </section>
-
 
 
 				<section data-markdown>
@@ -278,6 +351,55 @@
 				</section>
 
 
+				<section data-markdown>
+                	<script type="text/template">
+						## Pipeline
+						
+						* Glue code for blocks below
+                	</script>
+                </section>
+				
+				
+				<section data-markdown>
+                	<script type="text/template">
+						## Resources
+						
+						* artifacts used in the pipeline (inputs/outputs)
+						* can be checked (for changes), pulled from and pushed to e.g., git, docker, artifactory, s3
+						* see https://concourse-ci.org/included-resources.html
+                	</script>
+                </section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Jobs
+
+						* determine the action(s) of your pipeline
+						* plan, which resource, which task, and in which order
+						* you cannot pass anything between jobs
+						* see https://concourse-ci.org/jobs.html
+					</script>
+				</section>
+				
+
+				<section data-markdown>
+					<script type="text/template">
+						## Tasks
+
+						* smallest configurable unit in a Concourse pipeline
+						* a function from inputs to outputs that can either succeed or fail
+						* are combined to form a job in your pipeline
+						* see https://concourse-ci.org/tasks.html
+						* benefit of task.yml files
+							* re-use
+							* debugging without repiping (read from repo)
+					
+					</script>
+				</section>
+
+
+
+				# TODO: Prepare some demo pipeline to navigate through
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 800%">Demo Time</h1>
@@ -296,7 +418,15 @@
                     <script type="text/template">
                         <h1 style="font-size: 800%">Recap</h1>
                     </script>
-                </section>
+				</section>
+				
+				<section data-markdown>
+					<script type="text/template">
+						## Recap
+
+						* TODO: What points are met?
+					</script>
+				</section>
 
 
                 <section data-markdown>
