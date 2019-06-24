@@ -260,7 +260,7 @@
 				<section data-markdown>
                 	<script type="text/template">
                         ## Some more details...
-                        * EVERYTING runs in ~~Docker~~ containers
+                        * EVERYTHING runs in ~~Docker~~ containers
                           * resources as well as jobs
                         * Declarative (YAML) Pipelines
                         * Stateless build jobs
@@ -355,6 +355,24 @@
                 </section>
 
 
+				<section data-markdown>
+						<script type="text/template">
+							## what else can concourse do
+	
+							* hijacking containers
+							* handling versions (version files, pull requests)
+							* credentials management (with Credhub / Vault)
+							* reusable pipeline tasks
+							* pre-flight checks
+							* Meta pipelines
+							* Jsonnet & spruce for templating
+							* Custom Resources
+												
+						</script>
+				</section>
+
+					
+
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 800%">Recap</h1>
@@ -445,7 +463,7 @@
 
 						* focus on pipelines
 						* containerized builds by default
-						* easy to operate (no snowflakes, versioning of config)
+						* easy to operate (no snowflakes, versioning of config, easy updates)
 						* good caching mechanisms
 						* yaml vs groovy
 						* few integrations
