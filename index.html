@@ -170,16 +170,27 @@
 								
 				<section data-markdown>
 					<script type="text/template">
-						## Docker Compose
+						### Docker Compose
 						
 
-							$ wget <https://concourse-ci.org/docker-compose.yml>
 							$ docker-compose up -d
-							$ open <http://localhost:8080>
-							# username & password: test/test
 						
-						## BOSH 
+						<p>
+
+						</p>
+						<span class="fragment" data-fragment-index="1">
+						### Cloud Installer Tools
+						<small>
+						* <b>control tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production</i> 
+						* <b>bucc</b>: <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
+						
+						</small>
+						</span>
+
+						<span class="fragment" data-fragment-index="2">
+						### BOSH 
 							$ bosh deploy -d concourse manifest.yml
+						</span>
 					</script>
 				</section>
 
@@ -187,30 +198,16 @@
 					<script type="text/template">
 						## What's BOSH?
 
-						* ansible lacks of global view and patch management functionalities
-						* deployment and lifecycle management tool
-						* canary updates
-						* monitoring and failure recovery
-						* IaaS agnostic due to cloud provider interface (CPI)
-						* opinionated way to deploy
+						* <i>ansible</i> lacks of global view and patch management functionalities
+						* BOSH is a deployment and lifecycle management tool
+						  * canary updates
+						  * monitoring and failure recovery
+						  * IaaS agnostic due to cloud provider interface (CPI)
+						  * opinionated way to deploy
 						
 					</script>
 				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Cloud Installer Tools
-						* <b>Control Tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production</i> 
-						
-						* <b>BUCC</b>: <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
-						*  See 
-							* <https://github.com/EngineerBetter/control-tower>
-							* <https://github.com/starkandwayne/bucc>
-
-						
-					</script>
-				</section>
-
+				
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 600%">Concourse Overview</h1>
@@ -481,6 +478,8 @@
 						* <https://www.thoughtworks.com/insights/blog/praise-go-script-part-i>
 						* <https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf>
 						* <https://concoursetutorial.com/>
+						* <https://github.com/EngineerBetter/control-tower>
+						* <https://github.com/starkandwayne/bucc>
 						* <https://github.com/pivotalservices/concourse-pipeline-samples/>
 						* <https://www.gocd.org/2017/05/02/what-does-pipelines-as-code-really-mean/>
 						* <https://stackify.com/top-continuous-integration-tools/>
@@ -495,7 +494,8 @@
 						* <https://de.slideshare.net/gwennetourneau/concourseci-overview>
 						* <https://andifalk.github.io/concourse-ci-demo/presentation/index.html>
 						* <https://medium.com/concourse-ci/getting-started-with-concourse-ci-on-macos-fb3a49a8e6b4>
-						</small>
+					
+					</small>
 					</script>
 				</section>
 
