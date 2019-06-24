@@ -81,7 +81,8 @@
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 600%">Pipelines that don't suck</h1>
-                        source: [Build pipeline that don't suck](<https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf>)
+
+                        source: [Build pipelines that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
                     </script>
                 </section>
 
@@ -172,21 +173,44 @@
 					<script type="text/template">
 						### Docker Compose
 						
-
+							$ wget https://concourse-ci.org/docker-compose.yml
 							$ docker-compose up -d
-						
-						<p>
 
-						</p>
-						<span class="fragment" data-fragment-index="1">
-						### Cloud Installer Tools
-						<small>
-						* <b>control tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production</i> 
-						* <b>bucc</b>: <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
-						
-						</small>
-						</span>
+						<br>
+						* easiest way to spin up local test setup
+						* further services (Vault, RocketChat...) can be added
+						* more elaborate `docker-compose.yml`: https://github.com/michaellihs/concourse-demo/blob/master/docker-compose.yml
 
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+						## Cloud Installer Tools
+
+						> "CI-First-Approach"
+						> * First spin-up CI infrastructure
+						> * Deploy everything else using Pipelines
+
+						<p style="text-align: left"><b><a href="https://github.com/starkandwayne/bucc">BUCC</a></b> (Stark & Wayne): <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub</p>
+
+						    $ git clone https://github.com/starkandwayne/bucc.git
+							$ cd bucc
+							$ source .envrc # if not using direnv
+
+						<p style="text-align: left"><a href="https://github.com/EngineerBetter/control-tower ">Control Tower</a> (EngineerBetter)</p>
+
+
+						    $ AWS_ACCESS_KEY_ID=<access-key-id> \
+						         AWS_SECRET_ACCESS_KEY=<secret-access-key> \
+						         control-tower deploy --iaas aws <your-project-name>
+						
+
+					</script>
+				</section>
+								
+				<section data-markdown>
+					<script type="text/template">
 						<span class="fragment" data-fragment-index="2">
 						### BOSH 
 							$ bosh deploy -d concourse manifest.yml
@@ -207,6 +231,8 @@
 						
 					</script>
 				</section>
+				
+
 				
                 <section data-markdown>
                     <script type="text/template">
@@ -272,69 +298,63 @@
                 	</script>
                 </section>
 
-
-
-				<section data-markdown>
-                	<script type="text/template">
-                        ## Concourse Architecture
-                        * Concourse web
-                        * Database
-                        * Concourse Worker
-                        * `fly` CLI
-                        * <https://docs.pivotal.io/p-concourse/4-x/architecture.html>
-                	</script>
-                </section>
-
-
 				<section data-markdown>
 					<script type="text/template">
 						<h1 style="font-size: 600%">Basic Building Blocks</h1>
 					</script>
 				</section>
 
+                <section>
+					<img src="images/building-blocks.png" style="border: none; box-shadow: none">
+				</section>
+
 
 				<section data-markdown>
                 	<script type="text/template">
-						## Pipeline
+						## [Pipeline](https://concourse-ci.org/pipelines.html)
 						
 						* Glue code for blocks below
+						* Mainly configures
+						  * a set of resources (for input and output)
+						  * a sequence of jobs
                 	</script>
                 </section>
 				
 				
 				<section data-markdown>
                 	<script type="text/template">
-						## Resources
+						## [Resources](https://concourse-ci.org/included-resources.html)
 						
-						* artifacts used in the pipeline (inputs/outputs)
+						* manage artifacts used in the pipeline (inputs/outputs)
 						* can be checked (for changes), pulled from and pushed to e.g., git, docker, artifactory, s3
-						* see <https://concourse-ci.org/included-resources.html>
+						* "*connects Concourse to the outside world*"
+						<img src="images/resource.png" style="border: none; box-shadow: none">
                 	</script>
                 </section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## Jobs
+						## [Jobs](https://concourse-ci.org/jobs.html)
 
 						* determine the action(s) of your pipeline
 						* plan, which resource, which task, and in which order
-						* you cannot pass anything between jobs
-						* see <https://concourse-ci.org/jobs.html>
+						* **you cannot pass anything between jobs**
+						<img src="images/job.png" width="80%" height="80%" style="border: none; box-shadow: none">
 					</script>
 				</section>
 				
 
 				<section data-markdown>
 					<script type="text/template">
-						## Tasks
+						## [Tasks](https://concourse-ci.org/tasks.html)
 
 						* smallest configurable unit in a Concourse pipeline
-						* a function from inputs to outputs that can either succeed or fail
+						* function from inputs to outputs <img src="images/task.png" width="80%" height="80%" style="border: none; box-shadow: none">
+						* can either succeed or fail
 						* are combined to form a job in your pipeline
-						* see <https://concourse-ci.org/tasks.html>
-						* benefit of task.yml files
-							* re-use
-							* debugging without repiping (read from repo)
+						* can be externalized into `task.yml` files 
+						  * allows re-use
+						  * facilitates debugging
 					
 					</script>
 				</section>
@@ -354,25 +374,67 @@
                     </script>
                 </section>
 
+                <section data-markdown>
+						<script type="text/template">
+							## Hijacking Containers
+	
+							* check what is going on in a task / resource container
+
+							   ```bash
+							   fly -t demo hijack  --job pipeline/job
+							   fly -t demo hijack  --check pipeline/check	
+							   ```
+
+							* facilitates debugging of pipelines
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## Executing Tasks in Isolation
+	
+							* run single pipeline task from command line
+
+							   ```bash
+							   fly -t demo execute -c hello-world.yml -i demo-repo=../	
+							   ```
+
+							  * `hello-world.yml` is the task file you want to run
+							  * `demo-repo` is a resource that you need in your job
+
+							* facilitates development of pipelines
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## Credentials Management with Vault
+	
+							* configure Concourse to use Vault
+
+							   ```bash
+							   CONCOURSE_VAULT_URL: https://vault:8200
+							   CONCOURSE_VAULT_AUTH_BACKEND: cert
+							   CONCOURSE_VAULT_CA_CERT: /vault-certs/vault-ca.crt
+							   CONCOURSE_VAULT_CLIENT_CERT: /vault-certs/concourse.crt
+							   CONCOURSE_VAULT_CLIENT_KEY: /vault-certs/concourse.key
+							   ```
+
+							* use `((pam_var))` placeholders in your pipelines
+							* Concourse replaces variables **at runtime**
+							* for configuration details see [Concourse Documentation on using Vault](https://concourse-ci.org/vault-credential-manager.html)
+						</script>
+				</section>
 
 				<section data-markdown>
 						<script type="text/template">
 							## what else can concourse do
-	
-							* hijacking containers
 							* handling versions (version files, pull requests)
-							* credentials management (with Credhub / Vault)
 							* reusable pipeline tasks
 							* pre-flight checks
 							* Meta pipelines
 							* Jsonnet & spruce for templating
 							* Custom Resources
-												
-						</script>
-				</section>
-
-					
-
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 800%">Recap</h1>
@@ -422,7 +484,7 @@
 								<tr>
 									<td><i>scalable</i></td>
 									<td><span class="fragment" data-fragment-index="6">reuse of resources and tasks</span></td>
-									<td><span class="fragment" data-fragment-index="6">&#10004;</span></td>
+									<td><span class="fragment" data-fragment-index="6"><span style="color: green">&#10004;</span></span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -485,35 +547,40 @@
 					</script>
 				</section>
 
+				<section data-markdown>
+					<script type="text/template">
+						## References
+
+						* [Official Concourse Website](https://concourse-ci.org)
+						* [Concourse Documentation](https://concourse-ci.org/docs.html)
+						* [👍👍👍 Concourse Tutorial by Stark & Wayne](https://concoursetutorial.com/)
+						* [Concourse Pipeline Samples](https://github.com/pivotalservices/concourse-pipeline-samples/)
+					</script>
+				</section>
 
 				<section data-markdown>
 					<script type="text/template">
 						## References
 
-						<small>
-						* <https://github.com/michaellihs/concourse-demo>
-						* <https://concourse-ci.org>
-						* <https://www.thoughtworks.com/insights/blog/praise-go-script-part-i>
-						* <https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf>
-						* <https://concoursetutorial.com/>
-						* <https://github.com/EngineerBetter/control-tower>
-						* <https://github.com/starkandwayne/bucc>
-						* <https://github.com/pivotalservices/concourse-pipeline-samples/>
-						* <https://www.gocd.org/2017/05/02/what-does-pipelines-as-code-really-mean/>
-						* <https://stackify.com/top-continuous-integration-tools/>
-						* <https://github.com/sirech/talks/blob/master/2019-01-tw-concourse_ci.pdf>
-						* <https://github.com/sirech/example-concourse-pipeline>
-						* <https://www.thoughtworks.com/insights/blog/modernizing-your-build-pipelines>
-						* <https://github.com/CloudPipelines/>
-						* <https://techbeacon.com/devops/why-how-implement-pipeline-code-jenkins>
-						* <https://github.com/geofffranks/spruce>
-						* <https://jsonnet.org/>
-						* <http://docs.pivotal.io/platform-automation/v3.0/>
-						* <https://de.slideshare.net/gwennetourneau/concourseci-overview>
-						* <https://andifalk.github.io/concourse-ci-demo/presentation/index.html>
-						* <https://medium.com/concourse-ci/getting-started-with-concourse-ci-on-macos-fb3a49a8e6b4>
-					
-					</small>
+						* [Demo Repository for this Presentation](https://github.com/michaellihs/concourse-demo)
+						* [Continous Delivery mit Concourse CI (Andreas Falk)](https://andifalk.github.io/concourse-ci-demo/presentation/index.html)
+						* [👍👍👍 Build Pipelines that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
+						* [Concourse Vault Integration](https://concourse-ci.org/vault-credential-manager.html)
+						* [Getting started with Concourse CI on Mac](https://medium.com/concourse-ci/getting-started-with-concourse-ci-on-macos-fb3a49a8e6b4)
+						* [ThoughtWorks on the "Go Script"](https://www.thoughtworks.com/insights/blog/praise-go-script-part-i)
+						* [GoCD: What does piplines as code really mean?](https://www.gocd.org/2017/05/02/what-does-pipelines-as-code-really-mean)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## References
+
+						* [HashiCorp Vault](https://www.vaultproject.io/)
+						* [BUCC](https://github.com/starkandwayne/bucc)
+						* [Control Tower](https://github.com/EngineerBetter/control-tower)
+						* [jsonnet](https://jsonnet.org/)
+						* [Spruce](https://github.com/geofffranks/spruce)
 					</script>
 				</section>
 
