@@ -193,7 +193,7 @@
 				          * configuration as code
 				        * simple day 2 operations (updates, patches, backups)
 				          * staging
-				        * simple integration (CVS, IdM, Logging, Monitoring)
+				        * simple integration (CVEs, IAM, logging, monitoring)
 				          * user / permission management
 				          * web hooks
 				        * scalability (build agents, high availability)
@@ -201,20 +201,6 @@
 				          * zero downtime upgrades
 					</script>
 				</section>
-
-
-				<section data-markdown>
-					<script type="text/template">
-						## Developers' Whish List
-						
-						* easy to use
-						* spend time on features, not on CI/CD tooling
-						* reproducible
-						* web hooks
-						* <i>it just works!</i>
-					</script>
-				</section>
-
 
 
                 <section data-markdown>
@@ -232,23 +218,22 @@
 							$ docker-compose up -d
 							$ open http://localhost:8080
 							# username & password: test/test
+						
+						## BOSH 
+							$ bosh deploy -d concourse manifest.yml
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						## BOSH 
-							$ bosh deploy -d concourse manifest.yml
-							
+						## What's BOSH?
 
-						<p></p>
-						## What's bosh?
 						* deployment and lifecycle management tool
+						* ansible lacks of global view and patch management functionalities
 						* supports canary updates
-						* IaaS agnostic
 						* supports monitoring and failure recovery
-						* TODO: add picture that shows how bosh works with the cpi!
-						* TODO: Maybe only show some graphics?
+						* IaaS agnostic due to a CPI
+						* opinionated way to deploy
 						
 					</script>
 				</section>
