@@ -81,51 +81,10 @@
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 600%">Pipelines that don't suck</h1>
-                        source: [Build pipeline that don't suck](https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf)
+                        source: [Build pipeline that don't suck](<https://github.com/sirech/talks/blob/master/2019-04-tw-build_pipelines.pdf>)
                     </script>
                 </section>
 
-
-
-<!-- 				<section data-markdown>
-						<script type="text/template">
-							## A Good Pipeline is 
-							
-							* Needs no modifications via UI
-							* Keep it close to the app (not sure about that, yet)
-							* Versioning
-
-
-						</script>
-				</section>
- -->
-		<!-- 		<section data-markdown>
-						<script type="text/template">
-							## A Good Pipeline is ..
-							## <i>maintainable</i>
-
-							* not a full blown programming language	
-							* declarative dependencies
-
-	
-
-								jobs:
-								  - name: build-microservice
-								  - name: push-microservice-to-s3
-								  - name: deploy-microservice
-									plan:
-									  - get: docker-image
-									  - get: s3-artifact
-										passed: [build-microservice]
-										trigger: true
-								  - name: test-deployment
-								    plan:
-								      - get: docker-image
-								      - get: git-repo-with-tests
-									    passed: [deploy-microservice]
-									    trigger: true 
-						</script>
-				</section> -->
 
 				<section data-markdown>
 					<script type="text/template">
@@ -170,7 +129,7 @@
 						
 						* avoid the <i>god step</i>
 						* avoid logging overdose
-						* visualize dependencies (TODO: Add screenshot)
+						* visualize dependencies
 					
 					</script>
 				</section>
@@ -214,9 +173,9 @@
 						## Docker Compose
 						
 
-							$ wget https://concourse-ci.org/docker-compose.yml
+							$ wget <https://concourse-ci.org/docker-compose.yml>
 							$ docker-compose up -d
-							$ open http://localhost:8080
+							$ open <http://localhost:8080>
 							# username & password: test/test
 						
 						## BOSH 
@@ -228,11 +187,11 @@
 					<script type="text/template">
 						## What's BOSH?
 
-						* deployment and lifecycle management tool
 						* ansible lacks of global view and patch management functionalities
-						* supports canary updates
-						* supports monitoring and failure recovery
-						* IaaS agnostic due to a CPI
+						* deployment and lifecycle management tool
+						* canary updates
+						* monitoring and failure recovery
+						* IaaS agnostic due to cloud provider interface (CPI)
 						* opinionated way to deploy
 						
 					</script>
@@ -241,12 +200,13 @@
 				<section data-markdown>
 					<script type="text/template">
 						## Cloud Installer Tools
-						* <b>Control Tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production.</i> 
+						* <b>Control Tower</b>: <i>The goal of Control Tower is to be the world's easiest way to deploy and operate Concourse CI in production</i> 
 						
 						* <b>BUCC</b>: <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
 						*  See 
-							* https://github.com/starkandwayne/bucc
-							* https://github.com/EngineerBetter/control-tower 
+							* <https://github.com/EngineerBetter/control-tower>
+							* <https://github.com/starkandwayne/bucc>
+
 						
 					</script>
 				</section>
@@ -264,7 +224,7 @@
                         * Database
                         * Concourse Worker
                         * `fly` CLI
-                        * https://docs.pivotal.io/p-concourse/4-x/architecture.html
+                        * <https://docs.pivotal.io/p-concourse/4-x/architecture.html>
                 	</script>
                 </section>
 
@@ -310,8 +270,8 @@
                           * no passing of artifacts inbetween jobs
                         * Connects to external systems instead of re-inventing them
                           * e.g. Vault (credentials management), LDAP (user management)
-                        * No plugins, but resources (more lightweight)
-                        * Hightly opinionated (take it or leave it)
+                        * No plugins but resources (more lightweight)
+                        * Highly opinionated (take it or leave it)
                 	</script>
                 </section>
 
@@ -324,7 +284,7 @@
                         * Database
                         * Concourse Worker
                         * `fly` CLI
-                        * https://docs.pivotal.io/p-concourse/4-x/architecture.html
+                        * <https://docs.pivotal.io/p-concourse/4-x/architecture.html>
                 	</script>
                 </section>
 
@@ -351,7 +311,7 @@
 						
 						* artifacts used in the pipeline (inputs/outputs)
 						* can be checked (for changes), pulled from and pushed to e.g., git, docker, artifactory, s3
-						* see https://concourse-ci.org/included-resources.html
+						* see <https://concourse-ci.org/included-resources.html>
                 	</script>
                 </section>
 
@@ -362,7 +322,7 @@
 						* determine the action(s) of your pipeline
 						* plan, which resource, which task, and in which order
 						* you cannot pass anything between jobs
-						* see https://concourse-ci.org/jobs.html
+						* see <https://concourse-ci.org/jobs.html>
 					</script>
 				</section>
 				
@@ -374,7 +334,7 @@
 						* smallest configurable unit in a Concourse pipeline
 						* a function from inputs to outputs that can either succeed or fail
 						* are combined to form a job in your pipeline
-						* see https://concourse-ci.org/tasks.html
+						* see <https://concourse-ci.org/tasks.html>
 						* benefit of task.yml files
 							* re-use
 							* debugging without repiping (read from repo)
@@ -404,11 +364,60 @@
                     </script>
 				</section>
 				
+
+
 				<section data-markdown>
 					<script type="text/template">
-						## Recap
-
-						* TODO: What points are met?
+						## A good pipeline is ...
+<!-- 
+						* code <span class="fragment" data-fragment-index="1">&#10004;</span>
+						* maintainable <span class="fragment" data-fragment-index="2">&#10004;</span>
+						* reliable <span class="fragment" data-fragment-index="3">&#10004;</span>
+						* fast <span class="fragment" data-fragment-index="4">&#10004;</span>
+						* visual <span class="fragment" data-fragment-index="5">&#10004;</span>
+						* scalable <span class="fragment" data-fragment-index="6">&#10004;</span>
+					 -->
+						<table>
+							<thead>
+ 								<tr>
+									<th align="center">attribute</th>
+									<th align="center">concourse</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><i>code</i></td>
+									<td><span class="fragment" data-fragment-index="1">all configuration in git</span></td>
+									<td><span class="fragment" data-fragment-index="1">&#10004;</span></td>
+								</tr>
+								<tr>
+									<td><i>maintainable</i></td>
+									<td><span class="fragment" data-fragment-index="2">declarative but debugging experience required</span></td>
+									<td><span class="fragment" data-fragment-index="2">&#10004;</span></td>
+								</tr>
+								<tr>
+									<td><i>reliable</i></td>
+									<td><span class="fragment" data-fragment-index="3">all resources are versioned, pinning to versions</span></td>
+									<td><span class="fragment" data-fragment-index="3">&#10004;</span></td>
+								</tr>
+								<tr>
+									<td><i>fast</i></td>
+									<td><span class="fragment" data-fragment-index="4">caching of resources, adding workers easily</span></td>
+									<td><span class="fragment" data-fragment-index="4">&#10004;</span></td>
+								</tr>
+								<tr>
+									<td><i>visual</i></td>
+									<td><span class="fragment" data-fragment-index="5">dependencies and failures visible</span></td>
+									<td><span class="fragment" data-fragment-index="5">&#10004;</span></td>
+								</tr>
+								<tr>
+									<td><i>scalable</i></td>
+									<td><span class="fragment" data-fragment-index="6">reuse of resources and tasks</span></td>
+									<td><span class="fragment" data-fragment-index="6">&#10004;</span></td>
+								</tr>
+							</tbody>
+	</table>
 					</script>
 				</section>
 
