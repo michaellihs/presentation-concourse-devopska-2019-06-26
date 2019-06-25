@@ -155,7 +155,8 @@ body {
 
 .reveal code {
   border-radius: 10px;
-  background-color: tan;
+  background-color: #555;
+  color: #dcdcdc;
   font-family: monospace; }
 
 .reveal pre code {

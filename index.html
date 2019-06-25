@@ -47,9 +47,14 @@
 				<section data-markdown>
 				    <script type="text/template">
 				        ## Agenda
-				        - DevOps, CI/CD & all the buzz
-				        - ...
-				        - ...
+				        - CI/CD Revisited
+				        - Pipelines that don't suck
+				        - How to setup Concourse
+				        - Concourse Architecture
+				        - Concourse Building Blocks
+				        - Demo
+				        - Advanced Concepts
+				        - Recap
 				    </script>
 				</section>
 
@@ -70,8 +75,8 @@
 				    <script type="text/template">
 				        # Main Tasks of CI/CD
 
-				        * automate things that (used to) hurt
 				        * make building and delivering software more reliable
+				        * automate things that (used to) hurt
 				        * let developers focus on features
 				        * provide specific feedback (if things go wrong)
 				    </script>
@@ -189,8 +194,8 @@
 						## Cloud Installer Tools
 
 						> "CI-First-Approach"
-						> * First spin-up CI infrastructure
-						> * Deploy everything else using Pipelines
+						> 1. First spin-up CI infrastructure
+						> 2. Deploy everything else using Pipelines
 
 						<p style="text-align: left"><b><a href="https://github.com/starkandwayne/bucc">BUCC</a></b> (Stark & Wayne): <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub</p>
 
@@ -213,7 +218,13 @@
 					<script type="text/template">
 						<span class="fragment" data-fragment-index="2">
 						### BOSH 
-							$ bosh deploy -d concourse manifest.yml
+
+						* [github.com/concourse/concourse-bosh-deployment](https://github.com/concourse/concourse-bosh-deployment)
+
+						   ```
+						   $ bosh deploy -d concourse manifest.yml
+						   ```
+
 						</span>
 					</script>
 				</section>
@@ -221,12 +232,14 @@
 				<section data-markdown>
 					<script type="text/template">
 						## What's BOSH?
-						* <i>ansible</i> lacks of global view and patch management functionalities
+						* Tools like <i>Ansible</i> lack of IaaS and lifecycle-management
 						* BOSH is a deployment and lifecycle management tool
+						  * software packaging
 						  * canary updates
 						  * monitoring and failure recovery
 						  * IaaS agnostic due to cloud provider interface (CPI)
 						  * opinionated way to deploy
+						* *"Like Kubernetes for VMs"*
 					</script>
 				</section>
 				
@@ -347,7 +360,7 @@
 						## [Tasks](https://concourse-ci.org/tasks.html)
 
 						* smallest configurable unit in a Concourse pipeline
-						* function from inputs to outputs <img src="images/task.png" width="80%" height="80%" style="border: none; box-shadow: none">
+						* function from inputs to outputs <img src="images/task.png" width="60%" height="60%" style="border: none; box-shadow: none">
 						* can either succeed or fail
 						* are combined to form a job in your pipeline
 						* can be externalized into `task.yml` files 
@@ -426,25 +439,62 @@
 
 				<section data-markdown>
 						<script type="text/template">
-							## what else can concourse do
-							* handling versions (version files, pull requests)
-							* reusable pipeline tasks
-							* pre-flight checks
-							* Meta pipelines
-							* Jsonnet & spruce for templating
-							* Custom Resources
+							## Re-Usable Tasks
+							* Load Tasks from Git repository
+							* Share across piplines / projects
+
+
+							```
+							---
+							resources:
+							  - name: concourse-tasks
+							    type: git
+							    source:
+							      uri: https://github.com/michaellihs/concourse-tasks.git
+							  - name: busy-box
+							    type: docker-image
+							    source: {repository: busybox}
+
+							jobs:
+							  - name: job-1
+							    plan:
+							      - get: demo-repo
+							      - get: busy-box
+							      - task: task-1
+							        image: busy-box
+							        file: concourse-tasks/reused-task.yml
+							```
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## Custom Resources
+
+							* Docker Image with 3 (shell) scripts
+							  1. `check` check for new versions
+							  2. `in` pull new versions
+							  3. `out` put new versions
+							* e.g. Notification resource that sends messages to Threema
+							* see [Implementing Custom Resource Types](https://concourse-ci.org/implementing-resource-types.html)
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## The `meta` Pipeline
+
+							* *"Pipeline of Pipelines"* 
+							* Re-pipe the world in only a few seconds
+							* Scan your Git[Lab|Hub] server and create all the pipelines
+						</script>
+				</section>
+
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 800%">Recap</h1>
                     </script>
 				</section>
-				
-				<section data-markdown>
-                    <script type="text/template">
-                        <h1 style="font-size: 800%">RECAP</h1>
-                    </script>
-                </section>
-
 
 				<section data-markdown>
 					<script type="text/template">
@@ -494,13 +544,11 @@
 					</script>
 				</section>
 
-
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 600%">Downsides</h1>
                     </script>
                 </section>
-
 
 				<section data-markdown>
 					<script type="text/template">
@@ -513,11 +561,9 @@
 					</script>
 				</section>
 
-
-
                 <section data-markdown>
                     <script type="text/template">
-                        <h1 style="font-size: 600%">Concourse vs Jenkins</h1>
+                        <h1 style="font-size: 600%">Concourse <br>vs Jenkins</h1>
                     </script>
                 </section>
 
@@ -527,6 +573,7 @@
 						## what does concourse bring compared to jenkins? 
 
 						* focus on pipelines
+						  * pipelines as DAGs (fan-in and fan-out)
 						* containerized builds by default
 						* easy to operate (no snowflakes, versioning of config, easy updates)
 						* good caching mechanisms
@@ -534,6 +581,22 @@
 						* few integrations
 						* smaller community
 						* few resources on the internet
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<h1 style="font-size: 800%">Your <br>Next Steps</h1>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Wanna Learn Concourse Now?
+
+						* [The Concourse Tutorial by Stark & Wayne](https://concoursetutorial.com/)  is a good starting point
+						* Dig into [more advanced Concourse Examples](https://github.com/pivotalservices/concourse-pipeline-samples)
+						* Become cloudy with the [Spring Cloud Pipelines](https://cloudpipelines.github.io/concourse/) for Concourse
 					</script>
 				</section>
 
