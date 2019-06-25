@@ -171,48 +171,67 @@
 								
 				<section data-markdown>
 					<script type="text/template">
-						## Docker Compose
+						### Docker Compose
+						
+							$ wget https://concourse-ci.org/docker-compose.yml
+							$ docker-compose up -d
+
+						<br>
+						* easiest way to spin up local test setup
+						* further services (Vault, RocketChat...) can be added
+						* more elaborate `docker-compose.yml`: https://github.com/michaellihs/concourse-demo/blob/master/docker-compose.yml
+
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+						## Cloud Installer Tools
+
+						> "CI-First-Approach"
+						> * First spin-up CI infrastructure
+						> * Deploy everything else using Pipelines
+
+						<p style="text-align: left"><b><a href="https://github.com/starkandwayne/bucc">BUCC</a></b> (Stark & Wayne): <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub</p>
+
+						    $ git clone https://github.com/starkandwayne/bucc.git
+							$ cd bucc
+							$ source .envrc # if not using direnv
+
+						<p style="text-align: left"><a href="https://github.com/EngineerBetter/control-tower ">Control Tower</a> (EngineerBetter)</p>
+
+
+						    $ AWS_ACCESS_KEY_ID=<access-key-id> \
+						         AWS_SECRET_ACCESS_KEY=<secret-access-key> \
+						         control-tower deploy --iaas aws <your-project-name>
 						
 
-							$ wget <https://concourse-ci.org/docker-compose.yml>
-							$ docker-compose up -d
-							$ open <http://localhost:8080>
-							# username & password: test/test
-						
-						## BOSH 
+					</script>
+				</section>
+								
+				<section data-markdown>
+					<script type="text/template">
+						<span class="fragment" data-fragment-index="2">
+						### BOSH 
 							$ bosh deploy -d concourse manifest.yml
+						</span>
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
 						## What's BOSH?
-
-						* ansible lacks of global view and patch management functionalities
-						* deployment and lifecycle management tool
-						* canary updates
-						* monitoring and failure recovery
-						* IaaS agnostic due to cloud provider interface (CPI)
-						* opinionated way to deploy
-						
+						* <i>ansible</i> lacks of global view and patch management functionalities
+						* BOSH is a deployment and lifecycle management tool
+						  * canary updates
+						  * monitoring and failure recovery
+						  * IaaS agnostic due to cloud provider interface (CPI)
+						  * opinionated way to deploy
 					</script>
 				</section>
+				
 
-				<section data-markdown>
-					<script type="text/template">
-						## Cloud Installer Tools
-
-						* <b>Control Tower</b> (EngineerBetter): <i>The goal of <a href="https://github.com/EngineerBetter/control-tower ">Control Tower</a> is to be the world's easiest way to deploy and operate Concourse CI in production.</i>
-						* <b><a href="https://github.com/starkandwayne/bucc">BUCC</a></b> (Stark & Wayne): <b>B</b>OSH, <b>U</b>AA, <b>C</b>oncourse, <b>C</b>redhub
-						* Both use BOSH under the hood
-						<br><br>
-						> * "CI-First-Approach"
-						>  * First spin-up CI infrastructure
-						>  * Deploy everything else using Pipelines
-
-					</script>
-				</section>
-
+				
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 600%">Concourse Overview</h1>
@@ -265,7 +284,7 @@
 				<section data-markdown>
                 	<script type="text/template">
                         ## Some more details...
-                        * EVERYTING runs in ~~Docker~~ containers
+                        * EVERYTHING runs in ~~Docker~~ containers
                           * resources as well as jobs
                         * Declarative (YAML) Pipelines
                         * Stateless build jobs
@@ -304,9 +323,9 @@
                 	<script type="text/template">
 						## [Resources](https://concourse-ci.org/included-resources.html)
 						
-						* artifacts used in the pipeline (inputs/outputs)
+						* manage artifacts used in the pipeline (inputs/outputs)
 						* can be checked (for changes), pulled from and pushed to e.g., git, docker, artifactory, s3
-						* *connects Concourse to the outside world*
+						* "*connects Concourse to the outside world*"
 						<img src="images/resource.png" style="border: none; box-shadow: none">
                 	</script>
                 </section>
@@ -317,7 +336,7 @@
 
 						* determine the action(s) of your pipeline
 						* plan, which resource, which task, and in which order
-						* you cannot pass anything between jobs
+						* **you cannot pass anything between jobs**
 						<img src="images/job.png" width="80%" height="80%" style="border: none; box-shadow: none">
 					</script>
 				</section>
@@ -328,7 +347,7 @@
 						## [Tasks](https://concourse-ci.org/tasks.html)
 
 						* smallest configurable unit in a Concourse pipeline
-						* function from inputs to outputs <img src="images/task.png" style="border: none; box-shadow: none">
+						* function from inputs to outputs <img src="images/task.png" width="80%" height="80%" style="border: none; box-shadow: none">
 						* can either succeed or fail
 						* are combined to form a job in your pipeline
 						* can be externalized into `task.yml` files 
@@ -353,7 +372,67 @@
                     </script>
                 </section>
 
+                <section data-markdown>
+						<script type="text/template">
+							## Hijacking Containers
+	
+							* check what is going on in a task / resource container
 
+							   ```bash
+							   fly -t demo hijack  --job pipeline/job
+							   fly -t demo hijack  --check pipeline/check	
+							   ```
+
+							* facilitates debugging of pipelines
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## Executing Tasks in Isolation
+	
+							* run single pipeline task from command line
+
+							   ```bash
+							   fly -t demo execute -c hello-world.yml -i demo-repo=../	
+							   ```
+
+							  * `hello-world.yml` is the task file you want to run
+							  * `demo-repo` is a resource that you need in your job
+
+							* facilitates development of pipelines
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## Credentials Management with Vault
+	
+							* configure Concourse to use Vault
+
+							   ```bash
+							   CONCOURSE_VAULT_URL: https://vault:8200
+							   CONCOURSE_VAULT_AUTH_BACKEND: cert
+							   CONCOURSE_VAULT_CA_CERT: /vault-certs/vault-ca.crt
+							   CONCOURSE_VAULT_CLIENT_CERT: /vault-certs/concourse.crt
+							   CONCOURSE_VAULT_CLIENT_KEY: /vault-certs/concourse.key
+							   ```
+
+							* use `((pam_var))` placeholders in your pipelines
+							* Concourse replaces variables **at runtime**
+							* for configuration details see [Concourse Documentation on using Vault](https://concourse-ci.org/vault-credential-manager.html)
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							## what else can concourse do
+							* handling versions (version files, pull requests)
+							* reusable pipeline tasks
+							* pre-flight checks
+							* Meta pipelines
+							* Jsonnet & spruce for templating
+							* Custom Resources
                 <section data-markdown>
                     <script type="text/template">
                         <h1 style="font-size: 800%">Recap</h1>
@@ -403,7 +482,7 @@
 								<tr>
 									<td><i>scalable</i></td>
 									<td><span class="fragment" data-fragment-index="6">reuse of resources and tasks</span></td>
-									<td><span class="fragment" data-fragment-index="6">&#10004;</span></td>
+									<td><span class="fragment" data-fragment-index="6"><span style="color: green">&#10004;</span></span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -444,7 +523,7 @@
 
 						* focus on pipelines
 						* containerized builds by default
-						* easy to operate (no snowflakes, versioning of config)
+						* easy to operate (no snowflakes, versioning of config, easy updates)
 						* good caching mechanisms
 						* yaml vs groovy
 						* few integrations
