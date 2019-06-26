@@ -56,17 +56,14 @@
 
 					<h2>DevOps Meetup Karlsruhe</h2>
 					<img src="images/complex-failed-pipeline.png" style="border: 0; box-shadow: none;" />
-					<!--<img height="30%" width="30%" src="images/concourse-black.png" style="border: 0; box-shadow: none; opacity: 0.6" />-->
-					<!--<p style="font-size: 50%">image source: https://concourse-ci.org/trademarks.html</p>-->
+					<!--<img height="30%" width="30%" src="images/concourse-black.png" style="border: 0; box-shadow: none; opacity: 0.6" />
+					<p style="font-size: 50%">image source: https://concourse-ci.org/trademarks.html</p>-->
 				</section>
 				<section data-markdown>
 				    <script type="text/template">
 					# Alexander Müssig 
 					## <a href="https://twitter.com/muehsi">@muehsi</a>
 					</script>
-					<aside class="notes">
-						presentation notes
-					</aside>
 				</section>
 				<section data-markdown>
 				    <script type="text/template">
@@ -81,9 +78,8 @@
 				        - Pipelines that don't suck
 				        - How to setup Concourse
 				        - Concourse Architecture
-				        - Concourse Building Blocks
+				        - Concourse Pipelines
 				        - Demo
-				        - Advanced Concepts
 				        - Recap
 				    </script>
 				</section>
@@ -145,7 +141,7 @@
 					<script type="text/template">
 						## A good Pipeline is <i>reliable</i>
 
-						* isolated build (containers)
+						* isolated builds (containers)
 						* needs a tradeoff between isolation and speed
 					</script>
 				</section>
@@ -179,16 +175,22 @@
 					</script>
 				</section>
 
+                <section data-markdown>
+                    <script type="text/template">
+                        <h1 style="font-size: 600%">Embrace your Operators ❤️</h1>
+                    </script>
+                </section>
+
 				<section data-markdown>
 					<script type="text/template">
-				        ## Operators' Whish List
+				        ## Operators' Wish List
 
 				        * simple deployment
 				          * containers
 				          * configuration as code
 				        * simple day 2 operations (updates, patches, backups)
 				          * staging
-				        * simple integration (CVS, IAM, logging, monitoring)
+				        * simple integration (VersControl, IAM, logging, monitoring)
 				          * user / permission management
 				          * web hooks
 				        * scalability (build agents, high availability)
@@ -196,7 +198,6 @@
 				          * zero downtime upgrades
 					</script>
 				</section>
-
 
                 <section data-markdown>
                     <script type="text/template">
@@ -223,6 +224,7 @@
                     <script type="text/template">
 						## Cloud Installer Tools
 
+						
 						> "CI-First-Approach"
 						> 1. First spin-up CI infrastructure
 						> 2. Deploy everything else using Pipelines
@@ -239,7 +241,6 @@
 						    $ AWS_ACCESS_KEY_ID=<access-key-id> \
 						         AWS_SECRET_ACCESS_KEY=<secret-access-key> \
 						         control-tower deploy --iaas aws <your-project-name>
-						
 
 					</script>
 				</section>
@@ -251,7 +252,7 @@
 
 						* [github.com/concourse/concourse-bosh-deployment](https://github.com/concourse/concourse-bosh-deployment)
 
-						   ```
+						   ```bash
 						   $ bosh deploy -d concourse manifest.yml
 						   ```
 
