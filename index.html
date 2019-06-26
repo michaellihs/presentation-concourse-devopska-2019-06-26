@@ -22,21 +22,51 @@
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
+		<style type="text/css">
+		    #header-left {
+		        position: absolute;
+		        top: 0%;
+		        left: 0%;
+		    }
+		    #header-right {
+		        position: absolute;
+		        top: 0%;
+		        right: 0%;
+		    }
+		    #footer-left {
+		        position: absolute;
+		        bottom: 0%;
+		        left: 0%;
+		        margin-left: 10px;
+		        margin-bottom: 10px;
+		    }
+		</style>
+
 	</head>
 	<body>
+		<div id="hidden" style="display:none;">
+		    <div id="header">
+		        <div id="footer-left"><!--<a href="https://twitter.com/muehsi">@muehsi</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://twitter.com/kaktusmimi">@kaktusmimi</a>--></div>
+		    </div>
+		</div>
 		<div class="reveal">
 			<div class="slides">
 				<section>
 					<h1>Concourse CI</h1>
+
 					<h2>DevOps Meetup Karlsruhe</h2>
-					<img height="30%" width="30%" src="images/concourse-black.png" style="border: 0; box-shadow: none; opacity: 0.6" />
-					<p style="font-size: 50%">image source: https://concourse-ci.org/trademarks.html</p>
+					<img src="images/complex-failed-pipeline.png" style="border: 0; box-shadow: none;" />
+					<!--<img height="30%" width="30%" src="images/concourse-black.png" style="border: 0; box-shadow: none; opacity: 0.6" />-->
+					<!--<p style="font-size: 50%">image source: https://concourse-ci.org/trademarks.html</p>-->
 				</section>
 				<section data-markdown>
 				    <script type="text/template">
 					# Alexander Müssig 
 					## <a href="https://twitter.com/muehsi">@muehsi</a>
 					</script>
+					<aside class="notes">
+						presentation notes
+					</aside>
 				</section>
 				<section data-markdown>
 				    <script type="text/template">
@@ -77,7 +107,7 @@
 
 				        * make building and delivering software more reliable
 				        * automate things that (used to) hurt
-				        * let developers focus on features
+				        * let developers focus on features / value
 				        * provide specific feedback (if things go wrong)
 				    </script>
 				</section>
@@ -570,6 +600,15 @@
 
 				<section data-markdown>
 					<script type="text/template">
+						## Stackoverflow...
+
+						<img src="images/stackoverflow.png" width="60%" height="60%" style="border: none; box-shadow: none">
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
 						## what does concourse bring compared to jenkins? 
 
 						* focus on pipelines
@@ -603,6 +642,8 @@
 				<section data-markdown>
 					<script type="text/template">
 						<h1 style="font-size: 800%">Thank You!</h1>
+						## <a href="https://twitter.com/muehsi">@muehsi</a>
+						## <a href="https://twitter.com/kaktusmimi">@kaktusmimi</a>
 					</script>
 				</section>
 
@@ -653,6 +694,7 @@
 			</div>
 		</div>
 
+		<script src="js/jquery.js"></script>
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
@@ -669,6 +711,16 @@
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
+
+			var header = $('#header').html();
+		    if ( window.location.search.match( /print-pdf/gi ) ) {
+		        Reveal.addEventListener( 'ready', function( event ) {
+		            $('.slide-background').append(header);
+		        });
+		    }
+		    else {
+		        $('div.reveal').append(header);
+		   }
 		</script>
 	</body>
 </html>
